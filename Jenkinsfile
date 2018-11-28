@@ -12,6 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'yarn install'
+                sh 'yarn build'
             }
         }
         stage('Test') {
@@ -28,6 +29,11 @@ pipeline {
                 // input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'build', fingerprint: true
         }
     }
 }
