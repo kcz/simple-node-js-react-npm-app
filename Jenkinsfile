@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh 'yarn install'
                 sh 'yarn build'
-                archiveArtifacts artifacts: 'build', fingerprint: true
+                archiveArtifacts artifacts: 'build/**/*.*', fingerprint: true
             }
         }
         stage('Test') {
