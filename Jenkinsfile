@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 withEnv(["JEST_JUNIT_OUTPUT=./jest-test-results.xml"]) {
-                    sh 'yarn test -- --ci --testResultsProcessor="jest-junit"'
+                    sh 'yarn test -- --ci --reporters=default --reporters=jest-junit'
                 }
                 junit 'jest-test-results.xml'
             }
