@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:8.13.0-jessie'
-            args '-p 3001:3000'
+            args '-p 3000:3000'
         }
     }
     environment {
@@ -15,9 +15,10 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
+            withEnv(["JEST_JUNIT_OUTPUT=./jest-test-results.xml"]) {
+                sh 'yarn test -- --ci --testResultsProcessor="jest-junit"'
             }
+            junit 'jest-test-results.xml'
         }
         stage('Deliver') {
             steps {
