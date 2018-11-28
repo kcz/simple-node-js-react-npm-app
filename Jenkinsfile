@@ -13,6 +13,7 @@ pipeline {
             steps {
                 sh 'yarn install'
                 sh 'yarn build'
+                archiveArtifacts artifacts: 'build', fingerprint: true
             }
         }
         stage('Test') {
@@ -22,18 +23,6 @@ pipeline {
                 }
                 junit 'jest-test-results.xml'
             }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-                // input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'build', fingerprint: true
         }
     }
 }
