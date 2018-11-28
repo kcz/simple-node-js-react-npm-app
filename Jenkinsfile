@@ -25,4 +25,18 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            publishHTML(
+                target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'build',
+                    reportFiles: 'index.html',
+                    reportName: "SiteEntry"
+                ]
+            )
+        }
+    }
 }
